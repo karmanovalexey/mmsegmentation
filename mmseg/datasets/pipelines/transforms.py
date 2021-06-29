@@ -890,3 +890,44 @@ class PhotoMetricDistortion(object):
                      f'{self.saturation_upper}), '
                      f'hue_delta={self.hue_delta})')
         return repr_str
+
+
+@PIPELINES.register_module()
+class MaillaryHack(object):
+    """ map MV 65 class to 19 class like Cityscapes
+    """
+    def __init__(self):
+        self.map = [[13, 24, 41], [2, 15], [17], [6], [3], [45, 47], [48], [50], [30], [29],
+                    [27], [19], [20, 21, 22], [55], [61], [54], [58], [57], [52]]
+
+        self.others = [i for i in range(66)]
+        for i in self.map:
+            for j in i:
+                if j in self.others:
+                    self.others.remove(j)
+
+
+    def __call__(self, results):
+        """Call function to process the image with gamma correction.
+
+        Args:
+            results (dict): Result dict from loading pipeline.
+
+        Returns:
+            dict: Processed results.
+        """
+        gt_map = results['gt_semantic_seg']
+        # others -> 255
+        for value in self.others:
+            gt_map[gt_map == value] = 255
+
+        for index, map in enumerate(self.map):
+            for value in map:
+                gt_map[gt_map == value] = index
+
+        results['gt_semantic_seg'] = gt_map
+
+        return results
+
+    def __repr__(self):
+        return 'MaillaryHack'
