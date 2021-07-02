@@ -7,7 +7,7 @@ norm_cfg = dict(type='BN', requires_grad=True)
 
 crop_size = (720, 720)
 model = dict(
-    test_cfg=dict(stride=(170, 170), crop_size=crop_size),
+    test_cfg=dict(stride=(1, 1), crop_size=(1072, 1920)),
     backbone=dict(norm_cfg=norm_cfg),
     decode_head=dict(num_classes=66, norm_cfg=norm_cfg),
     auxiliary_head=dict(num_classes=66, norm_cfg=norm_cfg))
@@ -31,14 +31,15 @@ data = dict(
     samples_per_gpu=4,
     workers_per_gpu=4,
     train=dict(pipeline=train_pipeline, data_root='/workspace/Mapillary'),
-    val=dict(data_root='/workspace/Mapillary'),
-    test=dict(data_root='/workspace/Mapillary')
+    val=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt'),
+    test=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt')
 )
 
 log_config = dict(
     interval=50,
     hooks=[
         dict(type='WandbLoggerHook', by_epoch=False),
+        dict(type='TextLoggerHook', by_epoch=False),
 ])
 gpu_ids = [1]
-workflow = [('train', 1), ('val', 1)]
+workflow = [('train', 5), ('val', 1)]

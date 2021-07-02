@@ -1,0 +1,1 @@
+{"train/decode.loss_seg": 1.398221274614334, "train/decode.acc_seg": 65.48465103149414, "train/aux.loss_seg": 0.667338353395462, "train/aux.acc_seg": 61.78305679321289, "train/loss": 2.0655596351623533, "learning_rate": 0.003960578045336321, "momentum": 0.9, "_runtime": 434, "_timestamp": 1625041037, "_step": 450}

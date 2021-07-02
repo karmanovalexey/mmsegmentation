@@ -1,0 +1,26 @@
+{
+    "os": "Linux-5.4.0-58-generic-x86_64-with-glibc2.10",
+    "python": "3.8.8",
+    "heartbeatAt": "2021-06-30T08:08:44.458651",
+    "startedAt": "2021-06-30T08:08:43.131622",
+    "docker": null,
+    "gpu": "A100-SXM4-40GB",
+    "gpu_count": 8,
+    "cpu_count": 256,
+    "cuda": null,
+    "args": [
+        "itl_configs/deeplabv3plus_r50-d8_720x720_40k_map.py"
+    ],
+    "state": "running",
+    "program": "tools/train.py",
+    "codePath": "tools/train.py",
+    "git": {
+        "remote": "https://github.com/karmanovalexey/mmsegmentation.git",
+        "commit": "88ca4b36592ac0b388c009bf57fcadb84d56c559"
+    },
+    "email": null,
+    "root": "/workspace/mmsegmentation",
+    "host": "10ff693cc69b",
+    "username": "root",
+    "executable": "/opt/conda/bin/python3"
+}
