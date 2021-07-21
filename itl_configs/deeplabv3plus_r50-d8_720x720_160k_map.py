@@ -1,6 +1,6 @@
 _base_ = [
     '../configs/_base_/models/deeplabv3plus_r50-d8.py', '../configs/_base_/datasets/mapillary.py',
-    '../configs/_base_/default_runtime.py', '../configs/_base_/schedules/schedule_160k.py'
+    '../configs/_base_/default_runtime.py', './_base_/schedules/schedule_160k_adamw.py'
 ]
 
 norm_cfg = dict(type='BN', requires_grad=True)
@@ -36,7 +36,7 @@ data = dict(
     val=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt'),
     test=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt')
 )
-
+resume_from = '/workspace/mmsegmentation/work_dirs/deeplabv3plus_r50-d8_720x720_160k_map/iter_160000.pth'
 log_config = dict(
     interval=50,
     hooks=[

@@ -1,6 +1,6 @@
 _base_ = [
     '../configs/_base_/models/gcnet_r50-d8.py', '../configs/_base_/datasets/mapillary.py',
-    '../configs/_base_/default_runtime.py', '../configs/_base_/schedules/schedule_160k.py'
+    '../configs/_base_/default_runtime.py', './_base_/schedules/schedule_160k_adamw.py'
 ]
 
 norm_cfg = dict(type='BN', requires_grad=True)

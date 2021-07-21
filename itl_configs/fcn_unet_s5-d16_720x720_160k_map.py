@@ -1,6 +1,6 @@
 _base_ = [
     '../configs/_base_/models/fcn_unet_s5-d16.py', '../configs/_base_/datasets/mapillary.py',
-    '../configs/_base_/default_runtime.py', '../configs/_base_/schedules/schedule_160k.py'
+    '../configs/_base_/default_runtime.py', './_base_/schedules/schedule_160k_adamw.py'
 ]
 
 norm_cfg = dict(type='BN', requires_grad=True)
@@ -28,8 +28,8 @@ train_pipeline = [
 ]
 
 data = dict(
-    samples_per_gpu=3,
-    workers_per_gpu=3,
+    samples_per_gpu=1,
+    workers_per_gpu=1,
     train=dict(pipeline=train_pipeline, data_root='/workspace/Mapillary'),
     val=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt'),
     test=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt')
