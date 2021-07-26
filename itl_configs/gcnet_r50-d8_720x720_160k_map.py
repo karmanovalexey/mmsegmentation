@@ -30,8 +30,8 @@ train_pipeline = [
 optimizer = dict(type='SGD', lr=0.004, momentum=0.9, weight_decay=0.0001)
 
 data = dict(
-    samples_per_gpu=3,
-    workers_per_gpu=3,
+    samples_per_gpu=1,
+    workers_per_gpu=1,
     train=dict(pipeline=train_pipeline, data_root='/workspace/Mapillary'),
     val=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt'),
     test=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt')
