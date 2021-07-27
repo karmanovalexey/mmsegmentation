@@ -2,6 +2,8 @@ import warnings
 from abc import ABCMeta, abstractmethod
 from collections import OrderedDict
 
+import os
+from PIL import Image
 import mmcv
 import numpy as np
 import torch
@@ -198,7 +200,8 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
                     show=False,
                     wait_time=0,
                     out_file=None,
-                    opacity=0.5):
+                    opacity=0.5,
+                    single_dimension=False):
         """Draw `result` over `img`.
 
         Args:
@@ -224,35 +227,47 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         img = mmcv.imread(img)
         img = img.copy()
         seg = result[0]
-        if palette is None:
-            if self.PALETTE is None:
-                palette = np.random.randint(
-                    0, 255, size=(len(self.CLASSES), 3))
-            else:
-                palette = self.PALETTE
-        palette = np.array(palette)
-        assert palette.shape[0] == len(self.CLASSES)
-        assert palette.shape[1] == 3
-        assert len(palette.shape) == 2
-        assert 0 < opacity <= 1.0
-        color_seg = np.zeros((seg.shape[0], seg.shape[1], 3), dtype=np.uint8)
-        for label, color in enumerate(palette):
-            color_seg[seg == label, :] = color
-        # convert to BGR
-        color_seg = color_seg[..., ::-1]
+        single_dimension=True
+        if single_dimension:
+            direct = out_file.rpartition('/')[0]
+            if not os.path.exists(direct):
+                os.makedirs(direct)
+            os.chmod(direct, 0o777)
+            
+            seg = np.asarray(seg, dtype=np.uint8)
+            save_img = Image.fromarray(seg)
+            save_img.save(out_file, 'PNG')
+            os.chmod(out_file, 0o777)
+        else:
+            if palette is None:
+                if self.PALETTE is None:
+                    palette = np.random.randint(
+                        0, 255, size=(len(self.CLASSES), 3))
+                else:
+                    palette = self.PALETTE
+            palette = np.array(palette)
+            assert palette.shape[0] == len(self.CLASSES)
+            assert palette.shape[1] == 3
+            assert len(palette.shape) == 2
+            assert 0 < opacity <= 1.0
+            color_seg = np.zeros((seg.shape[0], seg.shape[1], 3), dtype=np.uint8)
+            for label, color in enumerate(palette):
+                color_seg[seg == label, :] = color
+            # convert to BGR
+            color_seg = color_seg[..., ::-1]
 
-        img = img * (1 - opacity) + color_seg * opacity
-        img = img.astype(np.uint8)
-        # if out_file specified, do not show image in window
-        if out_file is not None:
-            show = False
+            img = img * (1 - opacity) + color_seg * opacity
+            img = img.astype(np.uint8)
+            # if out_file specified, do not show image in window
+            if out_file is not None:
+                show = False
 
-        if show:
-            mmcv.imshow(img, win_name, wait_time)
-        if out_file is not None:
-            mmcv.imwrite(img, out_file)
+            if show:
+                mmcv.imshow(img, win_name, wait_time)
+            if out_file is not None:
+                mmcv.imwrite(img, out_file)
 
-        if not (show or out_file):
-            warnings.warn('show==False and out_file is not specified, only '
-                          'result image will be returned')
-            return img
+            if not (show or out_file):
+                warnings.warn('show==False and out_file is not specified, only '
+                            'result image will be returned')
+                return img

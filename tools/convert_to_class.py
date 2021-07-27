@@ -1,6 +1,7 @@
 import os
 import numpy as np
 
+from tqdm import tqdm
 from PIL import Image
 from argparse import ArgumentParser
 
@@ -23,10 +24,9 @@ PALETTE = [[165, 42, 42], [0, 192, 0], [196, 196, 196], [190, 153, 153],
 
 def main(args):
     assert os.path.exists(args.data_dir), "No dataset found"
-    assert os.path.exists(args.save_dir), "No dataset found"
-    if not os.path.exists(savedir):
-        os.makedirs(savedir)
-    os.chmod(savedir, 0o777)
+    if not os.path.exists(args.save_dir):
+        os.makedirs(args.save_dir)
+    os.chmod(args.save_dir, 0o777)
     
     if args.dataset=='Mapillary':
         filenames = [os.path.join(dp, f) for dp, dn, fn in os.walk(os.path.expanduser(args.data_dir)) for f in fn if f.endswith(".jpg")]
@@ -36,7 +36,7 @@ def main(args):
     print(len(filenames))
     filenames.sort()
 
-    for filename in filenames:
+    for filename in tqdm(filenames):
         with open(filename, 'rb') as f:
             image = np.array(Image.open(f).convert('RGB'))
         
@@ -51,9 +51,9 @@ def main(args):
 
         save_img = Image.fromarray(arr_2d)
         if args.dataset=='Mapillary':
-            save_point = savedir + '/' + filename[0][42:-4] + '.png'
+            save_point = args.save_dir + '/' + filename[37:-4] + '.png'
         elif args.dataset=='Kitti':
-            save_point = savedir + '/' + filename[0][17:-4] + '.png'
+            save_point = args.save_dir + '/' + filename[17:-4] + '.png'
         save_img.save(save_point, 'PNG')
         os.chmod(save_point, 0o777)
 
