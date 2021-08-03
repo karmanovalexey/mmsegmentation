@@ -33,8 +33,8 @@ data = dict(
     samples_per_gpu=3,
     workers_per_gpu=3,
     train=dict(pipeline=train_pipeline, data_root='/workspace/Mapillary'),
-    val=dict(data_root='/workspace/Mapillary'),#, split='/workspace/mmsegmentation/splits/split.txt'),
-    test=dict(data_root='/workspace/Mapillary')#, split='/workspace/mmsegmentation/splits/split.txt')
+    val=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt'),
+    test=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt')
 )
 resume_from = '/workspace/mmsegmentation/work_dirs/deeplabv3plus_r50-d8_720x720_160k_map/iter_160000.pth'
 log_config = dict(

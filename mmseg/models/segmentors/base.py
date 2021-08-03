@@ -227,7 +227,7 @@ class BaseSegmentor(BaseModule, metaclass=ABCMeta):
         img = mmcv.imread(img)
         img = img.copy()
         seg = result[0]
-        single_dimension=True
+        single_dimension=False
         if single_dimension:
             direct = out_file.rpartition('/')[0]
             if not os.path.exists(direct):

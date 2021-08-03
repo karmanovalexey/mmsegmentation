@@ -114,6 +114,7 @@ data
 *.pkl.json
 *.log.json
 work_dirs/
+demo/
 
 # Pytorch
 *.pth

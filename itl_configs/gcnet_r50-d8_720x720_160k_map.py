@@ -33,8 +33,8 @@ data = dict(
     samples_per_gpu=1,
     workers_per_gpu=1,
     train=dict(pipeline=train_pipeline, data_root='/workspace/Mapillary'),
-    val=dict(data_root='/workspace/Mapillary'),#, split='/workspace/mmsegmentation/splits/split.txt'),
-    test=dict(data_root='/workspace/Mapillary')#, split='/workspace/mmsegmentation/splits/split.txt')
+    val=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt'),
+    test=dict(data_root='/workspace/Mapillary', split='/workspace/mmsegmentation/splits/split.txt')
 )
 
 log_config = dict(

@@ -1,0 +1,26 @@
+{
+    "os": "Linux-4.15.0-143-generic-x86_64-with-glibc2.10",
+    "python": "3.8.8",
+    "heartbeatAt": "2021-07-28T11:54:42.902214",
+    "startedAt": "2021-07-28T11:54:41.808363",
+    "docker": null,
+    "gpu": "Tesla V100-SXM2-32GB",
+    "gpu_count": 2,
+    "cpu_count": 16,
+    "cuda": null,
+    "args": [
+        "itl_configs/setr_mla_720x720_160k_map.py"
+    ],
+    "state": "running",
+    "program": "tools/train.py",
+    "codePath": "tools/train.py",
+    "git": {
+        "remote": "https://github.com/karmanovalexey/mmsegmentation.git",
+        "commit": "3492846c2dc67240e2f091ee27a0acae18acf6a7"
+    },
+    "email": "karmanov.aa@phystech.edu",
+    "root": "/workspace/mmsegmentation",
+    "host": "c78a87b347ab",
+    "username": "root",
+    "executable": "/opt/conda/bin/python3"
+}
